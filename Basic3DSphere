@@ -1,0 +1,8 @@
+void setup(){
+ size(500,500,P3D);
+ translate(width/2,height/2);
+ noStroke();
+ fill(95,10,105);
+ lights();
+ sphere(10);
+}
