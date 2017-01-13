@@ -1,29 +1,46 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Jan 12 13:40:17 2017
+Created on Fri Jan 13 12:08:04 2017
+
+@author: 602540
 """
 
 import csv
 import json
 
-csvfile = open('yourfilepathhere/2016ALBat.csv', 'r')
-jsonfile = open('yourfilepathhere/ALbat.json', 'w')
-csvfile1 = open('yourfilepathhere/2016NLBat.csv', 'r')
-jsonfile1 = open('yourfilepathhere/NLbat.json', 'w')
+mlbData = []
+
+csvfile = open('placeholder/2016ALBat.csv', 'r')
+csvfile1 = open('placeholder/2016NLBat.csv', 'r')
+jsonfile = open('placeholder/MLBbat.json', 'w')
 
 fieldnames = ("Tm","#Bat","BatAge","R/G","G","PA","AB","R","H","2B","3B","HR","RBI","SB","CS","BB","SO","BA","OBP","SLG","OPS","OPS+","TB","GDP","HBP","SH","SF","IBB","LOB")
-reader = csv.DictReader( csvfile, fieldnames)
-for row in reader:
-   if reader.line_num==1:
-        pass
-   else:
-        json.dump(row, jsonfile)
-        jsonfile.write('\n')
 
-reader1 = csv.DictReader( csvfile1, fieldnames)
-for row in reader1:
-   if reader1.line_num==1:
+alreader = csv.DictReader(csvfile,fieldnames)
+nlreader = csv.DictReader(csvfile1,fieldnames)
+
+for row in alreader:
+    if alreader.line_num == 1:
         pass
-   else:
-        json.dump(row, jsonfile1)
-        jsonfile.write('\n')
+    else:
+        mlbData.append(row)
+    
+for row in nlreader:
+    if nlreader.line_num == 1:
+        pass
+    else:
+        mlbData.append(row)
+        
+print len(mlbData)
+    
+jsonfile.write('[')   
+
+for row in mlbData:
+    json.dump(row,jsonfile)
+    jsonfile.write(',')
+
+jsonfile.write(']')
+
+csvfile.close()
+csvfile1.close()
+jsonfile.close()
